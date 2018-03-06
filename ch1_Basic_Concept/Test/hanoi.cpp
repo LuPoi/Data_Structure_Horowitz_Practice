@@ -2,6 +2,42 @@
 #include <stdlib.h>
 using namespace std;
 
+struct top {
+	int topA;
+	int topB;
+	int topC;
+	int aj;
+	int bj;
+	int cj;
+};
+top get_top(int a[], int b[], int c[], int size) {
+	// int topA = 0; int topB = 0; int topC = 0;
+	// int aj = 0; int bj = 0; int cj = 0;
+	top local_top = {0, 0, 0, 0, 0, 0};
+	// get top
+	for (int j = 0; j < size; j++) {
+		if (a[j] != 0 && local_top.topA == 0) {
+			local_top.topA = a[j];
+			local_top.aj = j;
+		}
+		if (b[j] != 0 && local_top.topB == 0) {
+			local_top.topB = b[j];
+			local_top.bj = j;
+		}
+		if (c[j] != 0 && local_top.topC == 0) {
+			local_top.topC = c[j];
+			local_top.cj = j;
+		}
+	}
+	return local_top;
+}
+
+
+
+void move() {
+
+}
+
 void hanoi(int n, char A, char B, char C) {
 	int a[n-1]; int b[n-1]; int c[n-1];
 	int flag = 0; int sumA = 0;
@@ -17,23 +53,9 @@ void hanoi(int n, char A, char B, char C) {
 
 		for (int i = 0; i < n; i++) {
 			// cout << "current i: " << i << endl;
-			int topA = 0; int topB = 0; int topC = 0;
-			int aj = 0; int bj = 0; int cj = 0;
-			// get top
-			for (int j = 0; j < n; j++) {
-				if (a[j] != 0 && topA == 0) {
-					topA = a[j];
-					aj = j;
-				}
-				if (b[j] != 0 && topB == 0) {
-					topB = b[j];
-					bj = j;
-				}
-				if (c[j] != 0 && topC == 0) {
-					topC = c[j];
-					cj = j;
-				}
-			}
+
+			top main_top = {0, 0, 0, 0, 0, 0};
+			main_top = get_top(a,b,c,n);
 
 			cout << "====================" << endl;
 			cout << "topA: ";
@@ -61,212 +83,212 @@ void hanoi(int n, char A, char B, char C) {
 			// cout << "topB: " << topB << endl;
 			// cout << "topC: " << topC << endl;
 
-			if (i+1 == topA) {
-				if (topB == 0) {
-					swap(a[aj], b[bj]);
+			if (i+1 == main_top.topA) {
+				if (main_top.topB == 0) {
+					swap(a[main_top.aj], b[main_top.bj]);
 					// cout << "==A_topB: ";
-					cout << topA << endl;
+					cout << main_top.topA << endl;
 				}
-				else if (topC == 0) {
-					swap(a[aj], c[cj]);
+				else if (main_top.topC == 0) {
+					swap(a[main_top.aj], c[main_top.cj]);
 					// cout << "==A_topC: ";
-					cout << topA << endl;
+					cout << main_top.topA << endl;
 				}
-				else if (topB < topC && topA < topB) {
-					if (bj != n-1) {
+				else if (main_top.topB < main_top.topC && main_top.topA < main_top.topB) {
+					if (main_top.bj != n-1) {
 						for (int k = n - 1; k > 0; k--) {
 							b[k] = b[k-1];
 						}
-						b[bj] = 0;
-						swap(a[aj], b[bj]);
+						b[main_top.bj] = 0;
+						swap(a[main_top.aj], b[main_top.bj]);
 					}
 					else {
-						swap(a[aj], b[bj-1]);
+						swap(a[main_top.aj], b[main_top.bj-1]);
 					}
 					// cout << "==A_case3: ";
-					cout << topA << endl;
+					cout << main_top.topA << endl;
 				}
-				else if (topB > topC && topA < topC) {
-					if (cj != n-1) {
+				else if (main_top.topB > main_top.topC && main_top.topA < main_top.topC) {
+					if (main_top.cj != n-1) {
 						for (int k = n - 1; k > 0; k--) {
 							c[k] = c[k-1];
 						}
-						c[cj] = 0;
-						swap(a[aj], c[cj]);
+						c[main_top.cj] = 0;
+						swap(a[main_top.aj], c[main_top.cj]);
 					}
 					else {
-						swap(a[aj], c[cj-1]);
+						swap(a[main_top.aj], c[main_top.cj-1]);
 					}
 					// cout << "==A_case4: ";
-					cout << topA << endl;
+					cout << main_top.topA << endl;
 				}
-				else if (topB > topC && topA < topB) {
-					if (bj != n-1) {
+				else if (main_top.topB > main_top.topC && main_top.topA < main_top.topB) {
+					if (main_top.bj != n-1) {
 						for (int k = n - 1; k > 0; k--) {
 							b[k] = b[k-1];
 						}
-						b[bj] = 0;
-						swap(a[aj], b[bj]);
+						b[main_top.bj] = 0;
+						swap(a[main_top.aj], b[main_top.bj]);
 					}
 					else {
-						swap(a[aj], b[bj-1]);
+						swap(a[main_top.aj], b[main_top.bj-1]);
 					}
 					// cout << "==A_case3: ";
-					cout << topA << endl;
+					cout << main_top.topA << endl;
 				}
-				else if (topB < topC && topA < topC) {
-					if (cj != n-1) {
+				else if (main_top.topB < main_top.topC && main_top.topA < main_top.topC) {
+					if (main_top.cj != n-1) {
 						for (int k = n - 1; k > 0; k--) {
 							c[k] = c[k-1];
 						}
-						c[cj] = 0;
-						swap(a[aj], c[cj]);
+						c[main_top.cj] = 0;
+						swap(a[main_top.aj], c[main_top.cj]);
 					}
 					else {
-						swap(a[aj], c[cj-1]);
+						swap(a[main_top.aj], c[main_top.cj-1]);
 					}
 					// cout << "==A_case4: ";
-					cout << topA << endl;
+					cout << main_top.topA << endl;
 				}
 				else {
 				}
 			}
-			else if (i+1 == topB) {
-				if (topA == 0) {
-					swap(b[bj], a[aj]);
+			else if (i+1 == main_top.topB) {
+				if (main_top.topA == 0) {
+					swap(b[main_top.bj], a[main_top.aj]);
 					// cout << "==B: ";
-					cout << topB << endl;
+					cout << main_top.topB << endl;
 				}
-				else if (topC == 0) {
-					swap(b[bj], c[cj]);
+				else if (main_top.topC == 0) {
+					swap(b[main_top.bj], c[main_top.cj]);
 					// cout << "==B: ";
-					cout << topB << endl;
+					cout << main_top.topB << endl;
 				}
-				else if (topA < topC && topB < topA) {
-					if (aj != n-1) {
+				else if (main_top.topA < main_top.topC && main_top.topB < main_top.topA) {
+					if (main_top.aj != n-1) {
 						for (int k = n - 1; k > 0; k--) {
 							a[k] = a[k-1];
 						}
-						a[aj] = 0;
-						swap(b[bj], a[aj]);
+						a[main_top.aj] = 0;
+						swap(b[main_top.bj], a[main_top.aj]);
 					}
 					else {
-						swap(b[bj], a[aj-1]);
+						swap(b[main_top.bj], a[main_top.aj-1]);
 					}
 					// cout << "==B: ";
-					cout << topB << endl;
+					cout << main_top.topB << endl;
 				}
-				else if (topA > topC && topB < topC) {
-					if (cj != n-1) {
+				else if (main_top.topA > main_top.topC && main_top.topB < main_top.topC) {
+					if (main_top.cj != n-1) {
 						for (int k = n-1; k > 0; k--) {
 							c[k] = c[k-1];
 						}
-						c[cj] = 0;
-						swap(b[bj], c[cj]);
+						c[main_top.cj] = 0;
+						swap(b[main_top.bj], c[main_top.cj]);
 					}
 					else {
-						swap(b[bj], c[cj-1]);
+						swap(b[main_top.bj], c[main_top.cj-1]);
 					}
 					// cout << "==B: ";
-					cout << topB << endl;
+					cout << main_top.topB << endl;
 				}
-				else if (topA > topC && topB < topA) {
-					if (aj != n-1) {
+				else if (main_top.topA > main_top.topC && main_top.topB < main_top.topA) {
+					if (main_top.aj != n-1) {
 						for (int k = n - 1; k > 0; k--) {
 							a[k] = a[k-1];
 						}
-						a[aj] = 0;
-						swap(b[bj], a[aj]);
+						a[main_top.aj] = 0;
+						swap(b[main_top.bj], a[main_top.aj]);
 					}
 					else {
-						swap(b[bj], a[aj-1]);
+						swap(b[main_top.bj], a[main_top.aj-1]);
 					}
 					// cout << "==C: ";
-					cout << topC << endl;
+					cout << main_top.topC << endl;
 				}
-				else if (topA < topC && topB < topC) {
-					if (cj != n-1) {
+				else if (main_top.topA < main_top.topC && main_top.topB < main_top.topC) {
+					if (main_top.cj != n-1) {
 						for (int k = n - 1; k > 0; k--) {
 							c[k] = c[k-1];
 						}
-						c[cj] = 0;
-						swap(b[bj], c[cj]);
+						c[main_top.cj] = 0;
+						swap(b[main_top.bj], c[main_top.cj]);
 					}
 					else {
-						swap(b[bj], c[cj-1]);
+						swap(b[main_top.bj], c[main_top.cj-1]);
 					}
 					// cout << "==C: ";
-					cout << topC << endl;
+					cout << main_top.topC << endl;
 				}
 				else {
 				}
 			}
-			else if (i+1 == topC) {
-				if (topA == 0) {
-					swap(c[cj], a[aj]);
+			else if (i+1 == main_top.topC) {
+				if (main_top.topA == 0) {
+					swap(c[main_top.cj], a[main_top.aj]);
 					// cout << "==C: ";
-					cout << topC << endl;
+					cout << main_top.topC << endl;
 				}
-				else if (topB == 0) {
-					swap(c[cj], b[bj]);
+				else if (main_top.topB == 0) {
+					swap(c[main_top.cj], b[main_top.bj]);
 					// cout << "==C: ";
-					cout << topC << endl;
+					cout << main_top.topC << endl;
 				}
-				else if (topA < topB && topC < topA) {
-					if (aj != n-1) {
+				else if (main_top.topA < main_top.topB && main_top.topC < main_top.topA) {
+					if (main_top.aj != n-1) {
 						for (int k = n - 1; k > 0; k--) {
 							a[k] = a[k-1];
 						}
-						a[aj] = 0;
-						swap(c[cj], a[aj]);
+						a[main_top.aj] = 0;
+						swap(c[main_top.cj], a[main_top.aj]);
 					}
 					else {
-						swap(c[cj], a[aj-1]);
+						swap(c[main_top.cj], a[main_top.aj-1]);
 					}
 					// cout << "==C: ";
-					cout << topC << endl;
+					cout << main_top.topC << endl;
 				}
-				else if (topA > topB && topC < topB) {
-					if (bj != n-1) {
+				else if (main_top.topA > main_top.topB && main_top.topC < main_top.topB) {
+					if (main_top.bj != n-1) {
 						for (int k = n - 1; k > 0; k--) {
 							b[k] = b[k-1];
 						}
-						b[bj] = 0;
-						swap(c[cj], b[bj]);
+						b[main_top.bj] = 0;
+						swap(c[main_top.cj], b[main_top.bj]);
 					}
 					else {
-						swap(c[cj], b[bj-1]);
+						swap(c[main_top.cj], b[main_top.bj-1]);
 					}
 					// cout << "==C: ";
-					cout << topC << endl;
+					cout << main_top.topC << endl;
 				}
-				else if (topA > topB && topC < topA) {
-					if (aj != n-1) {
+				else if (main_top.topA > main_top.topB && main_top.topC < main_top.topA) {
+					if (main_top.aj != n-1) {
 						for (int k = n - 1; k > 0; k--) {
 							a[k] = a[k-1];
 						}
-						a[aj] = 0;
-						swap(c[cj], a[aj]);
+						a[main_top.aj] = 0;
+						swap(c[main_top.cj], a[main_top.aj]);
 					}
 					else {
-						swap(c[cj], a[aj-1]);
+						swap(c[main_top.cj], a[main_top.aj-1]);
 					}
 					// cout << "==C: ";
-					cout << topC << endl;
+					cout << main_top.topC << endl;
 				}
-				else if (topA < topB && topC < topB) {
-					if (bj != n-1) {
+				else if (main_top.topA < main_top.topB && main_top.topC < main_top.topB) {
+					if (main_top.bj != n-1) {
 						for (int k = n - 1; k > 0; k--) {
 							b[k] = b[k-1];
 						}
-						b[bj] = 0;
-						swap(c[cj], b[bj]);
+						b[main_top.bj] = 0;
+						swap(c[main_top.cj], b[main_top.bj]);
 					}
 					else {
-						swap(c[cj], b[bj-1]);
+						swap(c[main_top.cj], b[main_top.bj-1]);
 					}
 					// cout << "==C: ";
-					cout << topC << endl;
+					cout << main_top.topC << endl;
 				}
 				else {
 				}
