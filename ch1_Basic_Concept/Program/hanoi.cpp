@@ -32,8 +32,75 @@ top get_top(int a[], int b[], int c[], int size) {
 	return local_top;
 }
 
-void move() {
-
+void move(top main_top, int a[], int b[], int c[], int n) {
+	if (main_top.topB == 0) {
+		swap(a[main_top.aj], b[main_top.bj]);
+		// cout << "==A_topB: ";
+		cout << main_top.topA << endl;
+	}
+	else if (main_top.topC == 0) {
+		swap(a[main_top.aj], c[main_top.cj]);
+		// cout << "==A_topC: ";
+		cout << main_top.topA << endl;
+	}
+	else if (main_top.topB < main_top.topC && main_top.topA < main_top.topB) {
+		if (main_top.bj != n-1) {
+			for (int k = n - 1; k > 0; k--) {
+				b[k] = b[k-1];
+			}
+			b[main_top.bj] = 0;
+			swap(a[main_top.aj], b[main_top.bj]);
+		}
+		else {
+			swap(a[main_top.aj], b[main_top.bj-1]);
+		}
+		// cout << "==A_case3: ";
+		cout << main_top.topA << endl;
+	}
+	else if (main_top.topB > main_top.topC && main_top.topA < main_top.topC) {
+		if (main_top.cj != n-1) {
+			for (int k = n - 1; k > 0; k--) {
+				c[k] = c[k-1];
+			}
+			c[main_top.cj] = 0;
+			swap(a[main_top.aj], c[main_top.cj]);
+		}
+		else {
+			swap(a[main_top.aj], c[main_top.cj-1]);
+		}
+		// cout << "==A_case4: ";
+		cout << main_top.topA << endl;
+	}
+	else if (main_top.topB > main_top.topC && main_top.topA < main_top.topB) {
+		if (main_top.bj != n-1) {
+			for (int k = n - 1; k > 0; k--) {
+				b[k] = b[k-1];
+			}
+			b[main_top.bj] = 0;
+			swap(a[main_top.aj], b[main_top.bj]);
+		}
+		else {
+			swap(a[main_top.aj], b[main_top.bj-1]);
+		}
+		// cout << "==A_case3: ";
+		cout << main_top.topA << endl;
+	}
+	else if (main_top.topB < main_top.topC && main_top.topA < main_top.topC) {
+		if (main_top.cj != n-1) {
+			for (int k = n - 1; k > 0; k--) {
+				c[k] = c[k-1];
+			}
+			c[main_top.cj] = 0;
+			swap(a[main_top.aj], c[main_top.cj]);
+		}
+		else {
+			swap(a[main_top.aj], c[main_top.cj-1]);
+		}
+		// cout << "==A_case4: ";
+		cout << main_top.topA << endl;
+	}
+	else {
+	}
 }
 
 void print_current_state(int plate[], int size) {
@@ -74,74 +141,7 @@ void hanoi(int n, char A, char B, char C) {
 			print_current_state(c, n);
 
 			if (i+1 == main_top.topA) {
-				if (main_top.topB == 0) {
-					swap(a[main_top.aj], b[main_top.bj]);
-					// cout << "==A_topB: ";
-					cout << main_top.topA << endl;
-				}
-				else if (main_top.topC == 0) {
-					swap(a[main_top.aj], c[main_top.cj]);
-					// cout << "==A_topC: ";
-					cout << main_top.topA << endl;
-				}
-				else if (main_top.topB < main_top.topC && main_top.topA < main_top.topB) {
-					if (main_top.bj != n-1) {
-						for (int k = n - 1; k > 0; k--) {
-							b[k] = b[k-1];
-						}
-						b[main_top.bj] = 0;
-						swap(a[main_top.aj], b[main_top.bj]);
-					}
-					else {
-						swap(a[main_top.aj], b[main_top.bj-1]);
-					}
-					// cout << "==A_case3: ";
-					cout << main_top.topA << endl;
-				}
-				else if (main_top.topB > main_top.topC && main_top.topA < main_top.topC) {
-					if (main_top.cj != n-1) {
-						for (int k = n - 1; k > 0; k--) {
-							c[k] = c[k-1];
-						}
-						c[main_top.cj] = 0;
-						swap(a[main_top.aj], c[main_top.cj]);
-					}
-					else {
-						swap(a[main_top.aj], c[main_top.cj-1]);
-					}
-					// cout << "==A_case4: ";
-					cout << main_top.topA << endl;
-				}
-				else if (main_top.topB > main_top.topC && main_top.topA < main_top.topB) {
-					if (main_top.bj != n-1) {
-						for (int k = n - 1; k > 0; k--) {
-							b[k] = b[k-1];
-						}
-						b[main_top.bj] = 0;
-						swap(a[main_top.aj], b[main_top.bj]);
-					}
-					else {
-						swap(a[main_top.aj], b[main_top.bj-1]);
-					}
-					// cout << "==A_case3: ";
-					cout << main_top.topA << endl;
-				}
-				else if (main_top.topB < main_top.topC && main_top.topA < main_top.topC) {
-					if (main_top.cj != n-1) {
-						for (int k = n - 1; k > 0; k--) {
-							c[k] = c[k-1];
-						}
-						c[main_top.cj] = 0;
-						swap(a[main_top.aj], c[main_top.cj]);
-					}
-					else {
-						swap(a[main_top.aj], c[main_top.cj-1]);
-					}
-					// cout << "==A_case4: ";
-					cout << main_top.topA << endl;
-				}
-				else {
-				}
+				move(main_top, a, b, c, n);
 			}
 			else if (i+1 == main_top.topB) {
 				if (main_top.topA == 0) {
